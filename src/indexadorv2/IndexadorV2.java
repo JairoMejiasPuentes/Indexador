@@ -18,7 +18,8 @@ public class IndexadorV2 {
      */
     public static void main(String[] args) {
         Escaner e = new Escaner("C:\\Users\\Fran\\Downloads");
-        e.indexador();
+        //e.indexador();
+        e.recuperaCanciones();
 
     }
     

@@ -16,6 +16,7 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 /**
@@ -161,7 +162,44 @@ public class Escaner {
     }
     
     
-    public void creaLog(){
+    /**
+     * 
+     */
+    public ArrayList recuperaCanciones(){
+        ArrayList listaCanciones;
         
+        HibernateUtil.buildSessionFactory();
+            
+            try {
+                HibernateUtil.openSessionAndBindToThread();
+                Session session
+                        = HibernateUtil.getSessionFactory().getCurrentSession();
+                
+                //Creamos la sentencia para recuperar todo el contenido de la bd
+                String sql = "SELECT * FROM canciones";
+                SQLQuery query = session.createSQLQuery(sql);
+                
+                //Le indicamos que la clase a recuperar es Canciones
+                query.addEntity(Canciones.class);
+                listaCanciones =(ArrayList) query.list();
+                
+                System.out.println(listaCanciones);
+                
+
+            } finally {
+                HibernateUtil.closeSessionAndUnbindFromThread();
+                
+            }         
+            HibernateUtil.closeSessionFactory();
+            return listaCanciones;
+            
     }
+    
+    
+    /**
+     * Crea un archivo Log, donde se 
+     */
+    /*public void creaLog(){
+        
+    }*/
 }
