@@ -24,6 +24,12 @@ import org.hibernate.Session;
  */
 public class Escaner {
 
+    File f;
+    
+    Escaner(String url){
+        this.f = new File(url);
+    }
+    
     /**
      * Busca todos los archivos mp3 contenido en un directorio y subdirectorios
      *
@@ -128,8 +134,8 @@ public class Escaner {
      * Indexa en la base de datos todos los archivos mp3 encontrados
      * @param f
      */
-    public void indexador(File f) {
-        ArrayList listaCanciones = ls(f);
+    public void indexador() {
+        ArrayList listaCanciones = ls(this.f);
         for (int i = 0; i < listaCanciones.size(); i++) {
             File f2 = (File) listaCanciones.get(i);
             subeCancion(creaCancion(f2));
