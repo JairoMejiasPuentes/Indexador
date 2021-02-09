@@ -86,7 +86,7 @@ public class Escaner {
                 cancion.setAlbum(mp3Tag.getAlbum());
                 cancion.setAno(mp3Tag.getYear());
                 cancion.setGenero(mp3Tag.getGenreDescription());
-                cancion.setDuracion((short) mp3Tag.getLength());
+                cancion.setDuracion((short) mp3.getLengthInSeconds());
                 cancion.setCaratula(mp3Tag.getAlbumImage());
                 cancion.setRuta(f.getAbsolutePath());
                 cancion.setNombreFichero(f.getName());
@@ -158,5 +158,10 @@ public class Escaner {
             }
 
         return resultado;
+    }
+    
+    
+    public void creaLog(){
+        
     }
 }
