@@ -18,8 +18,10 @@ public class IndexadorV2 {
      */
     public static void main(String[] args) {
         Escaner e = new Escaner("C:\\Users\\Fran\\Downloads");
+        e.escribeLog("Esto es una prueba");
+        e.escribeLog("Esto es otra prueba");
         //e.indexador();
-        e.recuperaCanciones();
+        //e.recuperaCanciones();
 
     }
     

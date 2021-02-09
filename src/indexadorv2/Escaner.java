@@ -14,8 +14,13 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
@@ -25,10 +30,13 @@ import org.hibernate.Session;
  */
 public class Escaner {
 
-    File f;
+    private File f;
+    private PrintWriter archivoLog;
+    
     
     Escaner(String url){
         this.f = new File(url);
+        creaLog();
     }
     
     /**
@@ -163,7 +171,7 @@ public class Escaner {
     
     
     /**
-     * 
+     * Recupera todas las canciones de la base de datos
      */
     public ArrayList recuperaCanciones(){
         ArrayList listaCanciones;
@@ -195,11 +203,27 @@ public class Escaner {
             
     }
     
-    
     /**
-     * Crea un archivo Log, donde se 
+     * Crea un archivo Log, donde se incluiran los movimientos del indexador
      */
-    /*public void creaLog(){
-        
-    }*/
+    private void creaLog(){
+        try {
+            archivoLog = new PrintWriter(".//log.txt", "UTF-8");
+            archivoLog.printf("Se ha creado el indexador, con ruta %s", 
+                    f.getAbsolutePath());
+            archivoLog.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException ex) {
+            Logger.getLogger(Escaner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void escribeLog(String mensaje){
+        try {
+            archivoLog = new PrintWriter;
+            archivoLog.println(mensaje);
+            archivoLog.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Escaner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
