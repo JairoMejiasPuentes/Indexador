@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-feb-2021 15:52:53 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="indexadorv2.Canciones" table="canciones" catalog="cancionesdb" optimistic-lock="version">
+        <composite-id name="id" class="indexadorv2.CancionesId">
+            <key-property name="titulo" type="string">
+                <column name="titulo" length="100" />
+            </key-property>
+            <key-property name="artista" type="string">
+                <column name="artista" length="50" />
+            </key-property>
+        </composite-id>
+        <property name="album" type="string">
+            <column name="album" length="50" />
+        </property>
+        <property name="ano" type="string">
+            <column name="ano" length="4" />
+        </property>
+        <property name="genero" type="string">
+            <column name="genero" length="25" />
+        </property>
+        <property name="duracion" type="java.lang.Short">
+            <column name="duracion" />
+        </property>
+        <property name="caratula" type="binary">
+            <column name="caratula" />
+        </property>
+        <property name="ruta" type="string">
+            <column name="ruta" length="300" not-null="true" />
+        </property>
+        <property name="nombreFichero" type="string">
+            <column name="nombreFichero" length="100" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
