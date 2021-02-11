@@ -94,9 +94,9 @@ public class Escaner {
             if (mp3.hasId3v2Tag()) {
                 ID3v2 mp3Tag = mp3.getId3v2Tag();
                 String titulo = mp3Tag.getTitle();
-                if(titulo == null) titulo = "desconocido";
+                if(titulo == null) titulo = "Titulo desconocido";
                 String artista = mp3Tag.getArtist();
-                if(artista == null) artista = "asfasd"; 
+                if(artista == null) artista = "Artista desconocido"; 
                 cancion.setId(new CancionesId(titulo, artista));
                 cancion.setAlbum(mp3Tag.getAlbum());
                 cancion.setAno(mp3Tag.getYear());
