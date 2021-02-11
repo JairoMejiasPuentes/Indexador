@@ -94,7 +94,9 @@ public class Escaner {
             if (mp3.hasId3v2Tag()) {
                 ID3v2 mp3Tag = mp3.getId3v2Tag();
                 String titulo = mp3Tag.getTitle();
+                if(titulo == null) titulo = "desconocido";
                 String artista = mp3Tag.getArtist();
+                if(artista == null) artista = "asfasd"; 
                 cancion.setId(new CancionesId(titulo, artista));
                 cancion.setAlbum(mp3Tag.getAlbum());
                 cancion.setAno(mp3Tag.getYear());
@@ -104,6 +106,11 @@ public class Escaner {
                 cancion.setRuta(f.getAbsolutePath());
                 cancion.setNombreFichero(f.getName());
 
+            }else{
+                String mensaje = String.format("Ha surgido un problema al "
+                        + "recuperar los datos de %s", f.getAbsolutePath());
+                escribeLog(mensaje);
+                cancion = null;
             }
         } catch (IOException | UnsupportedTagException | InvalidDataException ex) {
             System.out.println("Error al obtener el archivo mp3" + ex.toString());
@@ -152,7 +159,12 @@ public class Escaner {
         ArrayList listaCanciones = ls(this.f);
         for (int i = 0; i < listaCanciones.size(); i++) {
             File f2 = (File) listaCanciones.get(i);
-            subeCancion(creaCancion(f2));
+            if(creaCancion(f2) == null){
+                listaCanciones.remove(i);
+                i--;
+            }else{
+                subeCancion(creaCancion(f2));
+            }
         }
         HibernateUtil.closeSessionFactory();
     }

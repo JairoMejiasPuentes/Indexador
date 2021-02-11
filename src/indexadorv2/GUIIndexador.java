@@ -16,7 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import sun.awt.DefaultMouseInfoPeer;
+
 
 /**
  *
@@ -210,18 +210,8 @@ public class GUIIndexador extends javax.swing.JFrame {
             }
         });
 
-        ListaReproduccion.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "11", "22", "33", "44", "55" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(ListaReproduccion);
 
-        ArchivosEncontrados.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "1", "2", "3", "4", "5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(ArchivosEncontrados);
 
         localALista.setText(">>");
@@ -344,7 +334,7 @@ public class GUIIndexador extends javax.swing.JFrame {
                 .addComponent(btnCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIndexar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(290, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,7 +418,7 @@ public class GUIIndexador extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this, f, "el archivo ya existe, seguro que quieres reescribirlo ?", WIDTH);
 
         } else {
-            JOptionPane.showMessageDialog(this, "Se ha generado un archiuvo nuevo");
+            JOptionPane.showMessageDialog(this, "Se ha generado un archivo nuevo");
             try {
                 // falta hacer el bucle for para añadir todas las canciones de la lista de reproducción
                 bw = new BufferedWriter(new FileWriter(f));
