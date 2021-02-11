@@ -15,10 +15,13 @@ import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.SQLQuery;
@@ -31,9 +34,9 @@ import org.hibernate.Session;
 public class Escaner {
 
     private File f;
-    private PrintWriter archivoLog;
+    private File archivoLog;
     
-    
+        
     Escaner(String url){
         this.f = new File(url);
         creaLog();
@@ -54,7 +57,6 @@ public class Escaner {
             for (int i = 0; i < lista.length; i++) {
                 //Creamos un nuevo archivo
                 File f2 = new File(f.getAbsolutePath() + "\\" + lista[i]);
-                System.out.println(f2.getAbsolutePath());
                 //Si es un directorio le añadimos recursividad
                 if (f2.isDirectory()) {
                     ls(f2);
@@ -127,9 +129,10 @@ public class Escaner {
                 session.save(cancion);
                 session.getTransaction().commit();
                 
-                }else{
-                    System.out.println("Se ha detectado una canción repetida");
-                    
+                String mensaje = String.format("Se ha subido la canción %s - %s a la base de datos",
+                        cancion.getId().getTitulo(), cancion.getId().getArtista());
+                escribeLog(mensaje);
+                
                 }
             } finally {
                 HibernateUtil.closeSessionAndUnbindFromThread();
@@ -161,14 +164,15 @@ public class Escaner {
 
             Canciones c = (Canciones) session.get(Canciones.class, id);
             if (c != null) {
-                System.out.println(c.getId());
+                String mensaje = String.format("La canción %s - %s ya se encuentra en la base de datos",
+                        c.getId().getTitulo(), c.getId().getArtista());
+                escribeLog(mensaje);
             } else {
                 resultado = true;
             }
 
         return resultado;
-    }
-    
+    } 
     
     /**
      * Recupera todas las canciones de la base de datos
@@ -207,17 +211,41 @@ public class Escaner {
      * Crea un archivo Log, donde se incluiran los movimientos del indexador
      */
     private void creaLog(){
-        try {
-            archivoLog = new PrintWriter(".//log.txt", "UTF-8");
-            archivoLog.printf("Se ha creado el indexador, con ruta %s", 
-                    f.getAbsolutePath());
-            archivoLog.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-            Logger.getLogger(Escaner.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //Inicializamos el fichero log
+            archivoLog = new File(".//log.txt");
+            
+            //Registramos el mensaje de inicio
+            String mensaje = "Se ha creado un nuevo Escaner";
+            escribeLog( mensaje);
+         
     }
     
-    public void escribeLog(String mensaje){
-    
+    /**
+     * Escribe en el archivo Log.txt, la acción que ha realizado, la fecha y hora.
+     * @param mensaje Acción que ha realizado nuestro Escaner
+     */
+    private void escribeLog(String mensaje){
+            
+            Date fecha = new Date();
+            SimpleDateFormat formateaFecha = new SimpleDateFormat("hh: mm: ss a dd-MMM-yyyy"); 
+
+            //Añadimos la fecha y un salto de línea al mensaje
+            mensaje += String.format(" --> %s \n", formateaFecha.format(fecha));
+            
+            FileWriter fic = null;
+           
+        try {
+            //Creamos flujo de salida
+            fic = new FileWriter(archivoLog, true);
+            fic.write(mensaje);
+        } catch (IOException ex) {
+            Logger.getLogger(Escaner.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fic.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Escaner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
