@@ -1,1 +1,0 @@
-Aqui se localizán todos los archivos generados por el Indexador

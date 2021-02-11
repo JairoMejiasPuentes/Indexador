@@ -56,7 +56,14 @@ public class Escaner {
                 File f2 = new File(f.getAbsolutePath() + "\\" + lista[i]);
                 //Si es un directorio le añadimos recursividad
                 if (f2.isDirectory()) {
-                    ls(f2);
+                    ArrayList listaRecursiva = ls(f2);
+                    
+                    if(listaRecursiva.size() != 0){
+                        for (int j = 0; j < listaRecursiva.size(); j++) {
+                            listaMp3.add(listaRecursiva.get(j));
+                        }
+                    }
+                    
 
                 } else {
                     //Si no es un directorio, comprobaremos si su extensión es mp3
@@ -69,7 +76,7 @@ public class Escaner {
         } else {
             System.out.println("Error: No existe el fichero o directorio");
 
-        }
+        } 
         return listaMp3;
     }
 
@@ -135,7 +142,7 @@ public class Escaner {
                 HibernateUtil.closeSessionAndUnbindFromThread();
                 
             }         
-            HibernateUtil.closeSessionFactory();
+
             
     }
 
@@ -149,6 +156,7 @@ public class Escaner {
             File f2 = (File) listaCanciones.get(i);
             subeCancion(creaCancion(f2));
         }
+        HibernateUtil.closeSessionFactory();
     }
 
     /**
@@ -209,7 +217,7 @@ public class Escaner {
      */
     private void creaLog(){
             //Inicializamos el fichero log
-            archivoLog = new File(".//archivosCreados//log.txt");
+            archivoLog = new File("log.txt");
             
             //Registramos el mensaje de inicio
             String mensaje = "Se ha creado un nuevo Escaner";
