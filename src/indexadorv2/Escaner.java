@@ -57,14 +57,12 @@ public class Escaner {
                 //Si es un directorio le añadimos recursividad
                 if (f2.isDirectory()) {
                     ArrayList listaRecursiva = ls(f2);
-                    
+                    //Si lo que nos devuelve no está vacio, lo incluye a nuestra lista actual de canciones
                     if(listaRecursiva.size() != 0){
                         for (int j = 0; j < listaRecursiva.size(); j++) {
                             listaMp3.add(listaRecursiva.get(j));
                         }
                     }
-                    
-
                 } else {
                     //Si no es un directorio, comprobaremos si su extensión es mp3
                     if (lista[i].endsWith(".mp3")) {
