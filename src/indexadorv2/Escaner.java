@@ -218,12 +218,6 @@ public class Escaner {
     }
     
     public void escribeLog(String mensaje){
-        try {
-            archivoLog = new PrintWriter;
-            archivoLog.println(mensaje);
-            archivoLog.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Escaner.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    
     }
 }
