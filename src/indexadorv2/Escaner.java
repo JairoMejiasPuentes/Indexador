@@ -14,11 +14,8 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -212,7 +209,7 @@ public class Escaner {
      */
     private void creaLog(){
             //Inicializamos el fichero log
-            archivoLog = new File(".//log.txt");
+            archivoLog = new File(".//archivosCreados//log.txt");
             
             //Registramos el mensaje de inicio
             String mensaje = "Se ha creado un nuevo Escaner";
